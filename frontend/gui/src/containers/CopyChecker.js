@@ -189,13 +189,13 @@ class CopyChecker extends Component {
         );
 
         return (
-            <div className='row'>
-                <div className='column' style={{ width: '40%' }}>
+            <div className='CopyCheckerRow'>
+                <div className='CopyCheckerColumn' style={{ width: '40%' }}>
                     <h2>The Copy Checker</h2>
                     <h3>Type in your copy</h3>
                     <MDBInput label="Body of the copy" rows="4" icon="pencil-alt" type="textarea" value={this.state.body} onChange={(event) => this.onChangeBodyOfAd(event)} />
                 </div>
-                <div className='column' style={{ width: '60%' }}>
+                <div className='CopyCheckerColumn' style={{ width: '60%' }}>
                     <h2>Revised Copy</h2>
                     <div style={{display:'block', width:'100%'}}>
                         {wordByWordComponents}

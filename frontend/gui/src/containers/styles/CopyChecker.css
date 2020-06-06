@@ -1,7 +1,7 @@
-.row {
+.CopyCheckerRow {
     display: flex;
   }
   
-.column {
+.CopyCheckerColumn {
   float: left;
 }

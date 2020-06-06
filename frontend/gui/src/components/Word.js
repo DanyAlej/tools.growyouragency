@@ -3,8 +3,7 @@ import React, { Component } from 'react';
 class Word extends Component {
 
     state = {
-        tieneEnter: false,
-        word: null,
+        rightClicked: false
     }
 
     searchOnArray = (arrayOfBadWords, word) => {
@@ -18,127 +17,48 @@ class Word extends Component {
         }
     }
 
-    componentDidUpdate(previousProps, previousState) {
-        if (previousProps.word !== this.props.word) {
-            if (/\n/.test(this.props.word)) {
-                if (this.props.word.split(/\n/).length === 1) {
-                    this.setState({
-                        tieneEnter: true,
-                        word: this.props.word.replace(/\n/, '')
-                    })
-                }
-                else {
-                    console.log('splitting happening')
-                    this.setState({
-                        tieneEnter: true,
-                        word: this.props.word.split(/\n/)
-                    })
-                }
-            }
-            else {
-                this.setState({
-                    word: this.props.word
-                })
-            }
-        }
+    handleRightClick = () => {
+        console.log('Right clicked')
+        this.setState({
+            rightClicked: true
+        })
     }
 
     render() {
 
         let checkedWord = null;
 
-        if (!this.state.tieneEnter) {
+        if (this.props.word !== "ENTER") {
             checkedWord = (
-                <div>
+                <div style={{ flexGrow: '0', float: 'left' }}>
                     {this.searchOnArray(this.props.badWordsTriggered, this.props.word) ?
-                        <div style={{ float: 'left' }}>
-                            <h1 onClick={() => this.props.acceptOneSuggestion(this.props.id)} style={{ color: 'red', whiteSpace: 'pre' }}>{this.state.word} </h1>
-                        </div>
-                        : <div style={{ float: 'left' }}>
-                            <h1 style={{ color: 'green', whiteSpace: 'pre' }}>{this.state.word} </h1>
-                        </div>}
-                </div>);
-        } else if (this.state.word.length > 1 && !this.searchOnArray(this.props.badWordsTriggered, this.state.word[0]) && !this.searchOnArray(this.props.badWordsTriggered, this.state.word[1])) {
-            console.log('ambas buenas');
-            console.log(this.state.word.length)
-            checkedWord = (
-                <div>
-                    <div style={{ display: 'flex' }}>
-                        <div style={{ float: 'left' }}>
-                            <h1 style={{ color: 'green', whiteSpace: 'pre' }}>{this.state.word[0]} </h1>
-                        </div>
-                        <span style={{ width: '100%', height: '100%', flexGrow: '1' }}></span>
-                    </div>
-                    <div style={{ float: 'left' }}>
-                        <h1 style={{ color: 'green', whiteSpace: 'pre' }}>{this.state.word[1]} </h1>
-                    </div>
-                </div>);
-        } else if (this.state.word.length > 1 && this.searchOnArray(this.props.badWordsTriggered, this.state.word[0]) && !this.searchOnArray(this.props.badWordsTriggered, this.state.word[1])) {
-            console.log('primera mala segunda buena');
-            checkedWord = (
-                <div>
-                    <div style={{ display: 'flex' }}>
-                        <div style={{ float: 'left' }}>
-                            <h1 onClick={() => this.props.acceptOneSuggestion(this.props.id)} style={{ color: 'red', whiteSpace: 'pre' }}>{this.state.word[0]}</h1>
-                        </div>
-                        <span style={{ width: '100%', height: '100%', flexGrow: '1' }}></span>
-                    </div>
-                    <div style={{ float: 'left' }}>
-                        <h1 style={{ color: 'green', whiteSpace: 'pre' }}>{this.state.word[1]} </h1>
-                    </div>
-                </div>);
-        } else if (this.state.word.length > 1 && !this.searchOnArray(this.props.badWordsTriggered, this.state.word[0]) && this.searchOnArray(this.props.badWordsTriggered, this.state.word[1])) {
-            console.log('primera buena segunda mala');
-            checkedWord = (
-                <div>
-                    <div style={{ display: 'flex' }}>
-                        <div style={{ float: 'left' }}>
-                            <h1 style={{ color: 'green', whiteSpace: 'pre' }}>{this.state.word[0]} </h1>
-                        </div>
-                        <span style={{ width: '100%', height: '100%', flexGrow: '1' }}></span>
-                    </div>
-                    <div style={{ float: 'left' }}>
-                        <h1 onClick={() => this.props.acceptOneSuggestion(this.props.id)} style={{ color: 'red', whiteSpace: 'pre' }}>{this.state.word[1]}</h1>
-                    </div>
-                </div>);
-        } else if (this.state.word.length > 1 && this.searchOnArray(this.props.badWordsTriggered, this.state.word[0]) && this.searchOnArray(this.props.badWordsTriggered, this.state.word[1])) {
-            console.log('ambas malas');
-            checkedWord = (
-                <div>
-                    <div style={{ display: 'flex' }}>
-                        <div style={{ float: 'left' }}>
-                            <h1 onClick={() => this.props.acceptOneSuggestion(this.props.id)} style={{ color: 'red', whiteSpace: 'pre' }}>{this.state.word[0]}</h1>
-                        </div>
-                        <span style={{ width: '100%', height: '100%', flexGrow: '1' }}></span>
-                    </div>
-                    <div style={{ float: 'left' }}>
-                        <h1 onClick={() => this.props.acceptOneSuggestion(this.props.id)} style={{ color: 'red', whiteSpace: 'pre' }}>{this.state.word[1]}</h1>
-                    </div>
-                </div>);
-        }
-        else {
-            checkedWord = (
-                <div>
-                    {this.searchOnArray(this.props.badWordsTriggered, this.props.word) ?
-                        <div style={{ display: 'flex' }}>
-                            <div style={{ float: 'left' }}>
-                                <h1 onClick={() => this.props.acceptOneSuggestion(this.props.id)} style={{ color: 'red', whiteSpace: 'pre' }}>{this.state.word}</h1>
-                            </div>
-                            <span style={{ width: '100%', height: '100%', flexGrow: '1' }}></span>
-                        </div>
+                        <h1 onContextMenu={() => this.handleRightClick()} onClick={() => this.props.acceptOneSuggestion(this.props.id)} style={{ color: 'red', whiteSpace: 'pre' }}>{this.props.word} </h1>
                         :
-                        <div style={{ display: 'flex' }}>
-                            <div style={{ float: 'left' }}>
-                                <h1 style={{ color: 'green', whiteSpace: 'pre' }}>{this.state.word} </h1>
-                            </div>
-                            <span style={{ width: '100%', height: '100%', flexGrow: '1' }}></span>
-                        </div>}
+                        <h1 style={{ color: 'green', whiteSpace: 'pre' }}>{this.props.word} </h1>}
                 </div>);
+        } else {
+            checkedWord = (
+                <div >
+                    <span style={{ width: '100%', height: '100%', display: 'flex' }}></span>
+                </div>)
+        }
+
+        let suggestions = null;
+        
+        if(this.state.rightClicked){
+            suggestions = (
+                <div style={{position:"absolute"}}>
+                    <h1>Sugerencia</h1>
+                </div>
+            )
+        }else{
+
         }
 
         return (
-            <div>
+            <div style={{position:'relative'}}>
                 {checkedWord}
+                {suggestions}
             </div>
         )
     }

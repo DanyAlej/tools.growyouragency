@@ -24,8 +24,9 @@ class CopyChecker extends Component {
 
     onChangeBodyOfAd = (event) => {
         const bodyTemp = event.target.value;
-        const wordByWord = bodyTemp.split(" ");
-
+        
+        const wordByWord = bodyTemp.replace(/[\r\n]+/g, " ENTER ").split(" ");
+        
         this.compareTheArrays(wordByWord, bodyTemp)
 
     };
@@ -134,6 +135,9 @@ class CopyChecker extends Component {
 
 
     setNewcopyChecker = (newBody, newBadWordsTriggered, newBodyWordByWord, newOcurrences) => {
+
+        newBody = newBody.replace(" ENTER ", "\n")
+
         this.setState({
             body: newBody,
             badWordsTriggered: newBadWordsTriggered,
@@ -193,10 +197,10 @@ class CopyChecker extends Component {
                 </div>
                 <div className='column' style={{ width: '60%' }}>
                     <h2>Revised Copy</h2>
-                    <div>
+                    <div style={{display:'block', width:'100%', position:'relative'}}>
                         {wordByWordComponents}
                     </div>
-                    <div style={{ clear: 'both' }}>
+                    <div style={{ clear: 'both'}}>
                         <h2>Bad words triggered</h2>
                     </div>
                     {badWordsAndSynonimsTriggered}

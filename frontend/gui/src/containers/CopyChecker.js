@@ -197,7 +197,7 @@ class CopyChecker extends Component {
                 </div>
                 <div className='column' style={{ width: '60%' }}>
                     <h2>Revised Copy</h2>
-                    <div style={{display:'block', width:'100%', position:'relative'}}>
+                    <div style={{display:'block', width:'100%'}}>
                         {wordByWordComponents}
                     </div>
                     <div style={{ clear: 'both'}}>

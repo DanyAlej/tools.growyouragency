@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import { ContextMenu, MenuItem, ContextMenuTrigger } from "react-contextmenu";
+import "./styles/ContextMenu.css"
+
 
 class Word extends Component {
 
@@ -17,13 +20,6 @@ class Word extends Component {
         }
     }
 
-    handleRightClick = () => {
-        console.log('Right clicked')
-        this.setState({
-            rightClicked: true
-        })
-    }
-
     render() {
 
         let checkedWord = null;
@@ -32,7 +28,14 @@ class Word extends Component {
             checkedWord = (
                 <div style={{ flexGrow: '0', float: 'left' }}>
                     {this.searchOnArray(this.props.badWordsTriggered, this.props.word) ?
-                        <h1 onContextMenu={() => this.handleRightClick()} onClick={() => this.props.acceptOneSuggestion(this.props.id)} style={{ color: 'red', whiteSpace: 'pre' }}>{this.props.word} </h1>
+                        <div>
+                            <ContextMenuTrigger class="contextMenu" id={this.props.id + ""}>
+                                <h1 onClick={() => this.props.acceptOneSuggestion(this.props.id)} style={{ color: 'red', whiteSpace: 'pre' }}>{this.props.word} </h1>
+                            </ContextMenuTrigger>
+                            <ContextMenu className="contextMenu" id={this.props.id+""}>
+                                <MenuItem className="menuItem" dara={{item: "Hola"}}>Hola</MenuItem>
+                            </ContextMenu>
+                        </div>
                         :
                         <h1 style={{ color: 'green', whiteSpace: 'pre' }}>{this.props.word} </h1>}
                 </div>);
@@ -43,22 +46,9 @@ class Word extends Component {
                 </div>)
         }
 
-        let suggestions = null;
-        
-        if(this.state.rightClicked){
-            suggestions = (
-                <div style={{position:"absolute"}}>
-                    <h1>Sugerencia</h1>
-                </div>
-            )
-        }else{
-
-        }
-
         return (
-            <div style={{position:'relative'}}>
+            <div>
                 {checkedWord}
-                {suggestions}
             </div>
         )
     }

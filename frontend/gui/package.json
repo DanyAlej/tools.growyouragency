@@ -11,6 +11,7 @@
     "mdbreact": "^4.27.0",
     "radium": "^0.26.0",
     "react": "^16.13.1",
+    "react-contextmenu": "^2.14.0",
     "react-dom": "^16.13.1",
     "react-expanding-textarea": "^2.2.0",
     "react-highlighter": "^0.4.3",

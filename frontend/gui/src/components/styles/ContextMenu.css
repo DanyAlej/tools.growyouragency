@@ -1,5 +1,5 @@
 
-.contextMenu {
+.contextMenuWord {
 	font-family: monospace;
   width: min-content;
   height: min-content;
@@ -13,9 +13,14 @@
   left: 0;
   user-select: none;
 }
-.itemStyle {
+.itemStyleWord {
 	font-size: 16px;
 	padding: 2px 11px 2px 10px;
 	margin: 0l;
 	color: #ccc;
+  }
+
+.itemStyleWord:hover {
+  background-color: rgb(63, 61, 57);
+  color: white;
   }

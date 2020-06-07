@@ -5,7 +5,6 @@ PieceOfCopyDetailView,
 PieceOfCopyCreateView,
 PieceOfCopyUpdateView,
 PieceOfCopyDeleteView)
-
 urlpatterns = [
     path('pieceOfCopy/', PieceOfCopyListView.as_view()),
     path('pieceOfCopy/<pk>', PieceOfCopyDetailView.as_view()),

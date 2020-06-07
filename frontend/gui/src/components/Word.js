@@ -15,11 +15,11 @@ class Word extends Component {
             }
         }
     }
-    synonim = (arrayOfBadWords, word) => {
+    badWord = (arrayOfBadWords, word) => {
         for (let index = 0; index < arrayOfBadWords.length; index++) {
             const element = arrayOfBadWords[index];
             if (element.badword === word) {
-                return element.synonim;
+                return element;
             } else {
 
             }
@@ -32,31 +32,34 @@ class Word extends Component {
 
         let isBadWord = this.searchOnArray(this.props.badWordsTriggered, this.props.word);
 
-        let synonimOfBadWord = null;
+        let badWord = null;
         
         if(isBadWord){
-            synonimOfBadWord = this.synonim(this.props.badWordsTriggered, this.props.word)
+            badWord = this.badWord(this.props.badWordsTriggered, this.props.word)
         }
 
         if (this.props.word !== "ENTER") {
             checkedWord = (
-                <div style={{ flexGrow: '0', float: 'left' }}>
+                <div style={{  float: 'left' }}>
                     {isBadWord ?
                         <div>
                             <ContextMenuTrigger id={this.props.id+""}>
-                                <h1 onClick={() => this.props.acceptOneSuggestion(this.props.id)} style={{ color: 'red', whiteSpace: 'pre' }}>{this.props.word} </h1>
+                                <h1 style={{marginTop:"-25px", color: '#F92772', whiteSpace: 'pre' }}>{this.props.word} </h1>
                             </ContextMenuTrigger>
-                            <ContextMenu className="contextMenu" id={this.props.id+""}>
-                                <MenuItem onClick={() => this.props.acceptOneSuggestion(this.props.id)} className="itemStyle" data={{item: synonimOfBadWord}}>{synonimOfBadWord}</MenuItem>
+                            <ContextMenu className="contextMenuWord" id={this.props.id+""}>
+                                <MenuItem onClick={() => this.props.acceptOneSuggestion(this.props.id, badWord.synonim)} className="itemStyleWord" data={{item: badWord.synonim}}>{badWord.synonim}</MenuItem>
+                                <MenuItem onClick={() => this.props.acceptOneSuggestion(this.props.id, badWord.synonim2)} className="itemStyleWord" data={{item: badWord.synonim2}}>{badWord.synonim2}</MenuItem>
+                                <MenuItem onClick={() => this.props.acceptOneSuggestion(this.props.id, badWord.synonim3)} className="itemStyleWord" data={{item: badWord.synonim3}}>{badWord.synonim3}</MenuItem>
+                                <MenuItem onClick={() => this.props.acceptOneSuggestion(this.props.id, badWord.synonim4)} className="itemStyleWord" data={{item: badWord.synonim4}}>{badWord.synonim4}</MenuItem>
                             </ContextMenu>
                         </div>
                         :
-                        <h1 style={{ color: 'green', whiteSpace: 'pre' }}>{this.props.word} </h1>}
+                        <h1 style={{ marginTop:"-25px", color: '#A5E22E', whiteSpace: 'pre' }}>{this.props.word} </h1>}
                 </div>);
         } else {
             checkedWord = (
-                <div >
-                    <span style={{ width: '100%', height: '100%', display: 'flex' }}></span>
+                <div>
+                    <span style={{height:"1px", width: '100%', display:"flex"}}></span>
                 </div>)
         }
 

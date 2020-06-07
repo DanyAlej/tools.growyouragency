@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import './styles/CopyChecker.css'
 import Word from '../components/Word';
 import axios from 'axios';
-import { MDBInput } from "mdbreact";
 
 
 class CopyChecker extends Component {
@@ -24,9 +23,9 @@ class CopyChecker extends Component {
 
     onChangeBodyOfAd = (event) => {
         const bodyTemp = event.target.value;
-        
+
         const wordByWord = bodyTemp.replace(/[\r\n]+/g, " ENTER ").split(" ");
-        
+
         this.compareTheArrays(wordByWord, bodyTemp)
 
     };
@@ -42,7 +41,7 @@ class CopyChecker extends Component {
             newWordByWord.push({ word: element, id: index })
             this.state.badWords.forEach(element2 => {
                 if (element === element2.badword) {
-                    triggeredWords.push({ badword: element2.badword, synonim: element2.synonim, id: index })
+                    triggeredWords.push({ badword: element2.badword, synonim: element2.synonim, synonim2: element2.synonim2, synonim3: element2.synonim3, synonim4: element2.synonim4, id: index })
                 }
             })
         }
@@ -109,15 +108,11 @@ class CopyChecker extends Component {
 
     };
 
-    acceptOneSuggestion = (index) => {
+    acceptOneSuggestion = (index, synonim) => {
 
         let currentBody = this.state.wordByWordComponents;
 
-        let badWordElement = null;
-
-        badWordElement = this.state.badWordsTriggered.find((element) => element.id === index);
-
-        currentBody[index] = { word: badWordElement.synonim, id: index };
+        currentBody[index] = { word: synonim, id: index };
 
         let editedBody = [];
 
@@ -189,21 +184,28 @@ class CopyChecker extends Component {
         );
 
         return (
-            <div className='CopyCheckerRow'>
-                <div className='CopyCheckerColumn' style={{ width: '40%' }}>
-                    <h2>The Copy Checker</h2>
-                    <h3>Type in your copy</h3>
-                    <MDBInput label="Body of the copy" rows="4" icon="pencil-alt" type="textarea" value={this.state.body} onChange={(event) => this.onChangeBodyOfAd(event)} />
-                </div>
-                <div className='CopyCheckerColumn' style={{ width: '60%' }}>
-                    <h2>Revised Copy</h2>
-                    <div style={{display:'block', width:'100%'}}>
-                        {wordByWordComponents}
+            <div className="CopyCheckerBigContainer">
+                <div className='CopyCheckerRow'>
+                    <div className='CopyCheckerColumn' style={{ width: '40%' }}>
+                        <form>
+                            <input type="text" name="name" className="question" id="nme" required autocomplete="off" />
+                            <label htmlFor="nme"><span>Headline</span></label>
+                            <h2>Body of your ad</h2>
+                            <textarea name="message" rows="18" className="question" id="msg" required autocomplete="off" value={this.state.body} onChange={(event) => this.onChangeBodyOfAd(event)}></textarea>
+                            <input type="submit" value="Send For Revision!" />
+                        </form>
                     </div>
-                    <div style={{ clear: 'both'}}>
-                        <h2>Bad words triggered</h2>
+                    <div className='CopyChecker2Column' style={{ width: '60%' }}>
+                        <h2 style={{ marginBottom: '25px' }}>Revised Copy</h2>
+                        <div style={{ width: '95%', backgroundColor: "#2F313D", overflow: "auto", marginTop: "-15px" }}>
+                            <span style={{ height: "1px", width: '100%', display: "flex" }}></span>
+                            {wordByWordComponents}
+                        </div>
+                        <div style={{ clear: 'both' }}>
+                            <h2>Bad words triggered</h2>
+                        </div>
+                        {badWordsAndSynonimsTriggered}
                     </div>
-                    {badWordsAndSynonimsTriggered}
                 </div>
             </div>
         );
@@ -211,3 +213,5 @@ class CopyChecker extends Component {
 }
 
 export default CopyChecker;
+
+// {/* <textarea name="message" className="question" rows="2" value={this.state.body} onChange={(event) => this.onChangeBodyOfAd(event)} /> */}
